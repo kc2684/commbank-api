@@ -109,12 +109,20 @@ class Client:
 
     def transactions(self, account: Account) -> List[Dict]:
         """Retrieve recent transactions for an account."""
+        
+        url3 =  account.link
+        cb_raw_id = account.raw["id"]
 
-        url = "https://www.commbank.com.au" + account.link.replace(
-            "/retail/netbank/accounts/", "/retail/netbank/accounts/api/transactions"
+        url1 = account.link.replace(
+            "my.commbank.com.au/netbank/", "commbank.com.au/retail/netbank/api/home/v1/"
         )
-
-        response = self._session.get(url, timeout=self._timeout)
+        cb_id = account.raw["id"]
+        url2 = f'https://secure.api.commbank.com.au/api/cds-au/v1/banking/accounts/{cb_id}/transactions'
+#        response1 = self._session.get(url1, timeout=self._timeout)
+#[SSL: CERTIFICATE_VERIFY_FAILED        response2 = self._session.get(url2, timeout=self._timeout)
+        response = self._session.get(url3, timeout=self._timeout)
+        # Get a response but no json data
+        data = response.json()
 
         # if "retail/digitalidentityprovider/connect/authorize" in response.url:
         #     # we need to submit a form to continue
@@ -143,3 +151,4 @@ class Client:
     # def __iter__(self):
     #     for account in self._accounts:
     #         yield account
+    
