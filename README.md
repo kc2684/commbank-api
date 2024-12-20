@@ -34,7 +34,7 @@ For each account, there are following properties:
 ### Transactions
 
 ```python
-transactions = client.get_transactions(account)
+transactions = client.extract_transactions(account)
 
 print(json.dumps(transactions, indent=4))
 ```
